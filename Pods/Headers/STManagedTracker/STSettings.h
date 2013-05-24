@@ -1,0 +1,1 @@
+../../STManagedTracker/STManagedTracker/DataModel/STSettings.h

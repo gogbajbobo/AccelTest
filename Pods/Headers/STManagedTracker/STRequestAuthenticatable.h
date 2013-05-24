@@ -1,0 +1,1 @@
+../../STManagedTracker/STManagedTracker/Protocols/STRequestAuthenticatable.h

@@ -1,0 +1,1 @@
+../../STManagedTracker/STManagedTracker/Classes/STSession.h

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreMotion/CoreMotion.h>
 #import "STSet.h"
+#import "STViewController.h"
 
 @interface STMotionTracker : NSObject
 
@@ -17,6 +18,8 @@
 @property (nonatomic) BOOL tracking;
 @property (nonatomic, strong) STSet *set;
 @property (nonatomic, strong) NSMutableArray *data;
+
+@property (nonatomic, strong) STViewController *caller;
 
 - (void)startTracker;
 - (void)stopTracker;

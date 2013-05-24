@@ -10,4 +10,9 @@
 
 @interface STViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *xLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yLabel;
+@property (weak, nonatomic) IBOutlet UILabel *zLabel;
+
+
 @end

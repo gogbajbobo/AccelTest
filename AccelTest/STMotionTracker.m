@@ -63,7 +63,15 @@
             [self.tracker stopDeviceMotionUpdates];
             self.tracking = NO;
         } else {
+            NSLog(@"motion %@", motion);
+            NSLog(@"self.caller %@", self.caller);
+            NSLog(@"self.caller %@", self.caller.xLabel.text);
+            self.caller.xLabel.text = [NSString stringWithFormat:@"X = %.2f", motion.userAcceleration.x];
+            self.caller.yLabel.text = [NSString stringWithFormat:@"Y = %.2f", motion.userAcceleration.y];
+            self.caller.zLabel.text = [NSString stringWithFormat:@"Z = %.2f", motion.userAcceleration.z];
             [self addNewData:motion];
+
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"newData" object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:motion, @"motion", nil]];
         }
     }];
 }

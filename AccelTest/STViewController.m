@@ -43,7 +43,7 @@
         
         STSet *set = (STSet *)[NSEntityDescription insertNewObjectForEntityForName:@"STSet" inManagedObjectContext:self.session.document.managedObjectContext];
         self.motionTracker.set = set;
-        self.motionTracker.interval = 0.1;
+        self.motionTracker.interval = 0.01;
         [self.motionTracker startTracker];
         [self.startButton setTitle:@"Stop" forState:UIControlStateNormal];
     }

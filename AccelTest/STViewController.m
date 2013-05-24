@@ -25,10 +25,11 @@
 
 @implementation STViewController
 
+
 - (IBAction)startButtonPressed:(id)sender {
     if (self.motionTracker.tracking) {
-        [self.motionTracker stopTracker];
         self.startButton.enabled = NO;
+        [self.motionTracker stopTracker];
         [self getDataFrom:self.motionTracker.data];
         self.startButton.enabled = YES;
         [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
@@ -43,7 +44,6 @@
         
         STSet *set = (STSet *)[NSEntityDescription insertNewObjectForEntityForName:@"STSet" inManagedObjectContext:self.session.document.managedObjectContext];
         self.motionTracker.set = set;
-        self.motionTracker.interval = 0.01;
         [self.motionTracker startTracker];
         [self.startButton setTitle:@"Stop" forState:UIControlStateNormal];
     }
@@ -64,12 +64,12 @@
 
 - (void)sessionStarted {
     if ([self.session.status isEqualToString:@"running"]) {
-        if (self.motionTracker.tracker.accelerometerAvailable) {
+//        if (self.motionTracker.tracker.accelerometerAvailable) {
             self.startButton.enabled = YES;
             self.showDataButton.enabled = YES;
-        } else {
-            NSLog(@"Accelerometer not available");
-        }
+//        } else {
+//            NSLog(@"Accelerometer not available");
+//        }
     }
 }
 

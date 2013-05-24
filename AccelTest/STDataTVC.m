@@ -29,9 +29,31 @@
 - (NSMutableDictionary *)settings {
     if (!_settings) {
         _settings = [NSMutableDictionary dictionary];
-        [_settings setValue:@"all" forKey:@"type"];
-        [_settings setValue:@"X" forKey:@"axis"];
-        [_settings setValue:[NSNumber numberWithInt:10] forKey:@"lenght"];
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *type = [defaults objectForKey:@"type"];
+        if (!type) {
+            type = @"all";
+            [defaults setObject:type forKey:@"type"];
+            [defaults synchronize];
+        }
+        [_settings setValue:type forKey:@"type"];
+
+        NSString *axis = [defaults objectForKey:@"axis"];
+        if (!axis) {
+            axis = @"X";
+            [defaults setObject:axis forKey:@"axis"];
+            [defaults synchronize];
+        }
+        [_settings setValue:axis forKey:@"axis"];
+        
+        NSNumber *lenght = [defaults objectForKey:@"lenght"];
+        if (!lenght) {
+            lenght = [NSNumber numberWithInt:10];
+            [defaults setObject:lenght forKey:@"lenght"];
+            [defaults synchronize];
+        }
+        [_settings setValue:lenght forKey:@"lenght"];
     }
     return _settings;
 }

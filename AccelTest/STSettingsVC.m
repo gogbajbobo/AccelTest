@@ -28,6 +28,9 @@
             self.axisSelector.enabled = NO;
             [self.caller.settings setValue:@"all" forKey:@"type"];
         }
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[self.caller.settings valueForKey:@"type"] forKey:@"type"];
+        [defaults synchronize];
     }
 }
 
@@ -40,6 +43,9 @@
         } else if (self.axisSelector.selectedSegmentIndex == 2) {
             [self.caller.settings setValue:@"Z" forKey:@"axis"];
         }
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[self.caller.settings valueForKey:@"axis"] forKey:@"axis"];
+        [defaults synchronize];
     }
 }
 
@@ -48,8 +54,12 @@
         self.lenghtSlider.value = rint(self.lenghtSlider.value / 10) * 10;
         self.lenghtLabel.text = [NSString stringWithFormat:@"%.f", self.lenghtSlider.value];
         [self.caller.settings setValue:[NSNumber numberWithDouble:self.lenghtSlider.value] forKey:@"lenght"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSNumber numberWithDouble:self.lenghtSlider.value] forKey:@"lenght"];
+        [defaults synchronize];
     }
 }
+
 
 
 

@@ -32,12 +32,21 @@
     if (interval != _interval) {
         _interval = interval;
         self.tracker.deviceMotionUpdateInterval = _interval;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSNumber numberWithDouble:_interval] forKey:@"interval"];
+        [defaults synchronize];
     }
 }
 
 - (NSTimeInterval)interval {
     if (!_interval) {
-        _interval = 0.01;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        _interval = [[defaults objectForKey:@"interval"] doubleValue];
+        if (!_interval) {
+            _interval = 0.01;
+            [defaults setObject:[NSNumber numberWithDouble:_interval] forKey:@"interval"];
+            [defaults synchronize];
+        }
     }
     return _interval;
 }

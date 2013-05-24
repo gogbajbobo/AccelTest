@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "AccelTest/STMotionTracker.m"
-         timestampString = "391008087.68513"
+         timestampString = "391113169.200587"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
+         startingLineNumber = "71"
+         endingLineNumber = "71"
          landmarkName = "-startTracker"
          landmarkType = "5">
       </FileBreakpoint>

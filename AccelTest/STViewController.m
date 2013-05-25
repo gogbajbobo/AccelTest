@@ -30,16 +30,16 @@
     if (self.motionTracker.tracking) {
         self.startButton.enabled = NO;
         [self.motionTracker stopTracker];
-        [self getDataFrom:self.motionTracker.data];
+        [self getDataFrom:self.data];
         self.startButton.enabled = YES;
         [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
-        [self.session.document saveDocument:^(BOOL success) {
-            if (success) {
-                
-            } else {
-                NSLog(@"save Not success");
-            }
-        }];
+//        [self.session.document saveDocument:^(BOOL success) {
+//            if (success) {
+//                
+//            } else {
+//                NSLog(@"save Not success");
+//            }
+//        }];
     } else {
         
         STSet *set = (STSet *)[NSEntityDescription insertNewObjectForEntityForName:@"STSet" inManagedObjectContext:self.session.document.managedObjectContext];
@@ -49,16 +49,32 @@
     }
 }
 
-- (void)getDataFrom:(NSMutableArray *)data {
-    
-    for (CMDeviceMotion *motion in data) {
-        STAcceleration *acceleration = (STAcceleration *)[NSEntityDescription insertNewObjectForEntityForName:@"STAcceleration" inManagedObjectContext:self.session.document.managedObjectContext];
-        acceleration.accelX = [NSNumber numberWithDouble:motion.userAcceleration.x];
-        acceleration.accelY = [NSNumber numberWithDouble:motion.userAcceleration.y];
-        acceleration.accelZ = [NSNumber numberWithDouble:motion.userAcceleration.z];
-        acceleration.timestamp = [NSNumber numberWithDouble:motion.timestamp];
-        acceleration.set = self.motionTracker.set;
-    }
+- (void)getDataFrom:(NSArray *)data {
+
+//    dispatch_queue_t queue = dispatch_queue_create("saveData", NULL);
+//    dispatch_async(queue, ^{
+
+        for (CMDeviceMotion *motion in data) {
+            STAcceleration *acceleration = (STAcceleration *)[NSEntityDescription insertNewObjectForEntityForName:@"STAcceleration" inManagedObjectContext:self.session.document.managedObjectContext];
+            acceleration.accelX = [NSNumber numberWithDouble:motion.userAcceleration.x];
+            acceleration.accelY = [NSNumber numberWithDouble:motion.userAcceleration.y];
+            acceleration.accelZ = [NSNumber numberWithDouble:motion.userAcceleration.z];
+            acceleration.timestamp = [NSNumber numberWithDouble:motion.timestamp];
+            acceleration.set = self.motionTracker.set;
+        }
+        [self.session.document saveDocument:^(BOOL success) {
+            if (success) {
+                NSLog(@"save success");                
+            } else {
+                NSLog(@"save Not success");
+            }
+        }];
+
+
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        });
+//    });
 
 }
 
@@ -88,12 +104,10 @@
     return _motionTracker;
 }
 
-//- (void)newDataRecieved:(NSNotification *)notification {
-//    CMDeviceMotion *motion = [notification.userInfo objectForKey:@"motion"];
-//    NSLog(@"motion %@", motion);
-//    self.xLabel.text = [NSString stringWithFormat:@"X = %.2f", motion.userAcceleration.x];
-//    self.yLabel.text = [NSString stringWithFormat:@"Y = %.2f", motion.userAcceleration.y];
-//    self.zLabel.text = [NSString stringWithFormat:@"Z = %.2f", motion.userAcceleration.z];
+//- (void)newDataSaved:(NSNotification *)notification {
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        self.startButton.enabled = YES;
+//    });
 //}
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,7 +121,7 @@
     self.startButton.enabled = NO;
     self.showDataButton.enabled = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionStarted) name:@"sessionStatusChanged" object:self.session];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newDataRecieved:) name:@"newData" object:self.motionTracker];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newDatasaved:) name:@"newDataSaved" object:self.motionTracker];
 
 	// Do any additional setup after loading the view, typically from a nib.
 }

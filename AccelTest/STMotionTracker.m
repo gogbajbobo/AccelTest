@@ -72,16 +72,22 @@
             [self.tracker stopDeviceMotionUpdates];
             self.tracking = NO;
         } else {
-            
-            dispatch_queue_t queue = dispatch_queue_create("saveMotion", NULL);
-            dispatch_async(queue, ^{
-                [self addNewData:motion];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.caller.xLabel.text = [NSString stringWithFormat:@"X = %.2f", motion.userAcceleration.x];
-                    self.caller.yLabel.text = [NSString stringWithFormat:@"Y = %.2f", motion.userAcceleration.y];
-                    self.caller.zLabel.text = [NSString stringWithFormat:@"Z = %.2f", motion.userAcceleration.z];
-                });
+            [self.data addObject:motion];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.caller.xLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.x];
+                self.caller.yLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.y];
+                self.caller.zLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.z];
             });
+
+//            dispatch_queue_t queue = dispatch_queue_create("saveMotion", NULL);
+//            dispatch_async(queue, ^{
+//                [self addNewData:motion];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    self.caller.xLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.x];
+//                    self.caller.yLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.y];
+//                    self.caller.zLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.z];
+//                });
+//            });
 
         }
     }];
@@ -89,6 +95,7 @@
 
 - (void)stopTracker {
     [self.tracker stopDeviceMotionUpdates];
+    self.caller.data = self.data;
     self.tracking = NO;
 }
 

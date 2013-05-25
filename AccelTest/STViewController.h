@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *yLabel;
 @property (weak, nonatomic) IBOutlet UILabel *zLabel;
 
+@property (nonatomic, strong) NSArray *data;
 
 @end

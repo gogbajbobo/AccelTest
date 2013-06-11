@@ -181,8 +181,8 @@
         CGContextMoveToPoint(context, self.xScale * ii, -majorTickLength/2);
         CGContextAddLineToPoint(context, self.xScale * ii, majorTickLength/2);
         CGRect textRect;
-        NSString *tickValue = [NSString stringWithString:[[NSNumber numberWithFloat:ii] stringValue]];
-        if ([tickValue isEqualToString:@"0"])tickValue = @"";
+        NSString *tickValue = [NSString stringWithFormat:@"%.f", ii];
+        if (ii == 0) tickValue = @"0";
         textRect.size = [tickValue sizeWithFont:font];
         textRect.origin.x = self.xScale * ii - textRect.size.width / 2;
         textRect.origin.y = - 15 - textRect.size.height / 2;
@@ -210,8 +210,8 @@
         CGContextAddLineToPoint(context, majorTo, self.yScale * ii);
         CGRect textRect;
         textRect = CGRectApplyAffineTransform(textRect, textTransform);
-        NSString *tickValue = [NSString stringWithString:[[NSNumber numberWithFloat:ii] stringValue]];
-        if ([tickValue isEqualToString:@"0"])tickValue = @"";
+        NSString *tickValue = [NSString stringWithFormat:@"%.f", ii];
+        if (ii == 0) tickValue = @"";
         textRect.size = [tickValue sizeWithFont:font];
         textRect.origin.x = -self.horizontalShift + 20 - textRect.size.width / 2;
         textRect.origin.y = self.yScale * ii - 5 - textRect.size.height / 2;

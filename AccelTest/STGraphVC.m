@@ -23,7 +23,7 @@
     if ((gesture.state == UIGestureRecognizerStateChanged) ||
         (gesture.state == UIGestureRecognizerStateEnded)) {
         CGPoint translation = [gesture translationInView:self.graphView];
-        self.graphView.verticalShift += translation.y;
+//        self.graphView.verticalShift += translation.y;
         self.graphView.horizontalShift += translation.x;
         [gesture setTranslation:CGPointZero inView:self.graphView];
     }

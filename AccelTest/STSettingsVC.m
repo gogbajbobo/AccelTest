@@ -13,11 +13,21 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *axisSelector;
 @property (weak, nonatomic) IBOutlet UISlider *lenghtSlider;
 @property (weak, nonatomic) IBOutlet UILabel *lenghtLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *dataSelector;
 
 @end
 
 @implementation STSettingsVC
 
+- (IBAction)dataSelect:(id)sender {
+    
+    if (sender == self.dataSelector) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSNumber numberWithInteger:self.dataSelector.selectedSegmentIndex] forKey:@"dataSelector"];
+        [defaults synchronize];
+    }
+    
+}
 
 - (IBAction)typeSelect:(id)sender {
     if (sender == self.typeSelector) {
@@ -61,6 +71,16 @@
 }
 
 
+- (void)dataSelectorSetup {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *value = [defaults objectForKey:@"dataSelector"];
+    if (!value) {
+        value = 0;
+        [defaults setObject:value forKey:@"dataSelector"];
+        [defaults synchronize];
+    }
+    self.dataSelector.selectedSegmentIndex = [value integerValue];
+}
 
 
 - (void)viewInit {
@@ -80,6 +100,8 @@
     } else if ([[self.caller.settings valueForKey:@"axis"] isEqualToString:@"Z"]) {
         self.axisSelector.selectedSegmentIndex = 2;
     }
+    
+    [self dataSelectorSetup];
     
     self.lenghtSlider.value = [[self.caller.settings valueForKey:@"lenght"] doubleValue];
     self.lenghtLabel.text = [NSString stringWithFormat:@"%.f", self.lenghtSlider.value];

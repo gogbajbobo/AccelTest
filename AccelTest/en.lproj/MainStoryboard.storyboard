@@ -202,12 +202,24 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="TsA-oi-lzh">
+                                <rect key="frame" x="20" y="272" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Acceleration"/>
+                                    <segment title="Velocity"/>
+                                </segments>
+                                <connections>
+                                    <action selector="dataSelect:" destination="SfG-D9-uPI" eventType="valueChanged" id="mgu-Hl-BgB"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="l3O-yK-WkX"/>
                     <connections>
                         <outlet property="axisSelector" destination="dad-VI-CJ3" id="TfW-Vz-1TU"/>
+                        <outlet property="dataSelector" destination="TsA-oi-lzh" id="AMU-5O-s6C"/>
                         <outlet property="lenghtLabel" destination="E8e-p9-Ect" id="Lek-7j-g07"/>
                         <outlet property="lenghtSlider" destination="KYg-mX-1bu" id="uk5-Ql-l9h"/>
                         <outlet property="typeSelector" destination="olf-5e-40f" id="cNx-vb-TWI"/>
@@ -251,43 +263,6 @@
             <point key="canvasLocation" x="3" y="178"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="STDataTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/STDataTVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="settingsButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="STGraphVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/STGraphVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="graphView" candidateClass="STGraphView"/>
-            </relationships>
-        </class>
-        <class className="STGraphView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/STGraphView.h"/>
-        </class>
-        <class className="STSettingsVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/STSettingsVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="axisSelector" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="lenghtLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lenghtSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="typeSelector" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="STViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/STViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="startButtonPressed:"/>
-                <relationship kind="outlet" name="showDataButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="startButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="xLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="yLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="zLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

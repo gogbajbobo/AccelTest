@@ -84,6 +84,17 @@
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES selector:@selector(compare:)];
     NSArray *accelData = [dataSet.accelerations sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *dataSelectorValue = [defaults objectForKey:@"dataSelector"];
+    if (!dataSelectorValue) {
+        dataSelectorValue = 0;
+        [defaults setObject:dataSelectorValue forKey:@"dataSelector"];
+        [defaults synchronize];
+    }
+    
+    NSLog(@"dataSelectorValue %@", dataSelectorValue);
+    
+    
     if ([[self.settings valueForKey:@"type"] isEqualToString:@"all"]) {
 
         STQueue *xQueue = [[STQueue alloc] init];
@@ -92,6 +103,10 @@
         xQueue.queueLength = lenght;
         yQueue.queueLength = lenght;
         zQueue.queueLength = lenght;
+        
+        double velocityX = 0;
+        double velocityY = 0;
+        double velocityZ = 0;
 
         for (STAcceleration *accelDatum in accelData) {
             
@@ -103,10 +118,25 @@
                 double meanX = [self meanValueFor:xQueue];
                 double meanY = [self meanValueFor:yQueue];
                 double meanZ = [self meanValueFor:zQueue];
-
-                double mean = sqrt(pow(meanX, 2) + pow(meanY, 2) + pow(meanZ, 2));
                 
-                [graphData addObject:[NSNumber numberWithDouble:mean]];
+                if ([dataSelectorValue integerValue] == 1) {
+                    
+                    velocityX += meanX;
+                    velocityY += meanY;
+                    velocityZ += meanZ;
+                    
+                    double mean = sqrt(pow(velocityX, 2) + pow(velocityY, 2) + pow(velocityZ, 2));
+                    
+                    [graphData addObject:[NSNumber numberWithDouble:mean]];
+                    
+                } else {
+
+                    double mean = sqrt(pow(meanX, 2) + pow(meanY, 2) + pow(meanZ, 2));
+                    
+                    [graphData addObject:[NSNumber numberWithDouble:mean]];
+
+                }
+
             }
             
         }
@@ -118,10 +148,18 @@
 
         NSString *axis = [NSString stringWithFormat:@"accel%@", [self.settings valueForKey:@"axis"]];
         
+        double velocity = 0;
+        
         for (STAcceleration *accelDatum in accelData) {
             [dataQueue enqueue:[accelDatum valueForKey:axis]];
             if (dataQueue.filled) {
-                [graphData addObject:[NSNumber numberWithDouble:[self meanValueFor:dataQueue]]];
+                double mean = [self meanValueFor:dataQueue];
+                if ([dataSelectorValue integerValue] == 1) {
+                    velocity += mean;
+                    [graphData addObject:[NSNumber numberWithDouble:velocity]];
+                } else {
+                    [graphData addObject:[NSNumber numberWithDouble:mean]];
+                }
             }
         }
 

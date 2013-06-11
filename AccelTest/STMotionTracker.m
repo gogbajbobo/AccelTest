@@ -77,6 +77,7 @@
                 self.caller.xLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.x];
                 self.caller.yLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.y];
                 self.caller.zLabel.text = [NSString stringWithFormat:@"%.2f", motion.userAcceleration.z];
+//                NSLog(@"%.2f", motion.userAcceleration.z);
             });
 
 //            dispatch_queue_t queue = dispatch_queue_create("saveMotion", NULL);

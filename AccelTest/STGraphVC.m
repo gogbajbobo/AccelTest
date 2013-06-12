@@ -33,16 +33,16 @@
 {
     if ((gesture.state == UIGestureRecognizerStateChanged) ||
         (gesture.state == UIGestureRecognizerStateEnded)) {
-        CGPoint currentTouchPoint = [gesture locationOfTouch:0 inView:self.graphView];
-        CGFloat xDiff = fabs(currentTouchPoint.x - self.touchPoint.x);
-        CGFloat yDiff = fabs(currentTouchPoint.y - self.touchPoint.y);
-        if (xDiff == 0) {
-            self.graphView.yScale *= gesture.scale;
-        } else if (yDiff == 0) {
-            self.graphView.xScale *= gesture.scale;
-        } else {
+//        CGPoint currentTouchPoint = [gesture locationOfTouch:0 inView:self.graphView];
+//        CGFloat xDiff = fabs(currentTouchPoint.x - self.touchPoint.x);
+//        CGFloat yDiff = fabs(currentTouchPoint.y - self.touchPoint.y);
+//        if (xDiff == 0) {
+//            self.graphView.yScale *= gesture.scale;
+//        } else if (yDiff == 0) {
+//            self.graphView.xScale *= gesture.scale;
+//        } else {
             [self.graphView changeScale:gesture.scale];
-        }
+//        }
         gesture.scale = 1;
         self.touchPoint = [gesture locationOfTouch:0 inView:self.graphView];
     }
@@ -52,8 +52,8 @@
 - (void)viewInit {
     self.graphView = (STGraphView *)self.view;
     self.graphView.graphData = self.graphData;
-//    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinch:)];
-//    [self.graphView addGestureRecognizer:pinch];
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinch:)];
+    [self.graphView addGestureRecognizer:pinch];
     [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)]];
 }
 

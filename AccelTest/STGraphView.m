@@ -24,7 +24,7 @@
 - (void)changeScale:(CGFloat)scale
 {
     self.xScale *= scale;
-    self.yScale *= scale;
+//    self.yScale *= scale;
 }
 
 - (CGFloat)xScale
@@ -124,12 +124,23 @@
     int xShift = rint(-self.horizontalShift);
     
     for (int i = 0; i < self.bounds.size.width; i++) {
-        currPoint.x = i+xShift;
-        if (currPoint.x >= 0 && currPoint.x < self.graphData.count) {
-            currPoint.y = [[self.graphData objectAtIndex:i+xShift] floatValue] * self.yScale;
+        currPoint.x = i + xShift;
+        NSUInteger index = rint(currPoint.x / self.xScale);
+        if (index < self.graphData.count) {
+            currPoint.y = [[self.graphData objectAtIndex:index] floatValue] * self.yScale;
         } else {
             currPoint.y = 0;
         }
+//
+//        
+//        
+//        
+//        if (currPoint.x >= 0 && currPoint.x < self.graphData.count) {
+//            NSUInteger index = rint((i + xShift) / self.xScale);
+//            currPoint.y = [[self.graphData objectAtIndex:index] floatValue] * self.yScale;
+//        } else {
+//            currPoint.y = 0;
+//        }
         if (i==0) {
             CGContextMoveToPoint(context, currPoint.x, currPoint.y);
         } else {
